@@ -63,11 +63,12 @@ Ce projet simule un pipeline Analytics Engineering réaliste pour une entreprise
 
 ```mermaid
 flowchart LR
-    A[Amazon S3 Bucket] --> B[Snowflake RAW Schema]
-    B --> C[dbt Staging Models]
-    C --> D[dbt Intermediate Models]
-    D --> E[Analytics Marts]
-    E --> F[Business Analysis / BI]
+    A["Amazon S3 Bucket"] --> B["Snowflake RAW Schema"]
+    B --> C["dbt Staging Models"]
+    C --> D["dbt Intermediate Models"]
+    D --> E["Analytics Marts"]
+    E --> F["Business Analysis / BI"]
+```
 
 ## Ingestion des Données
 
@@ -82,13 +83,6 @@ OLIST_PRODUCTS
 OLIST_SELLERS
 OLIST_GEOLOCATION
 OLIST_CHANGE
-
-## Résultats de Validation
-
-![dbt run](image.png)
-
-![dbt test](image-1.png)
-
 
 
 
