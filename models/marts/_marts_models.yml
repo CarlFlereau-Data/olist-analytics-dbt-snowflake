@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Table de faits des commandes"
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+
+      - name: customer_unique_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_olist_customers')
+                field: customer_unique_id
+
+      - name: max_review_score
+        tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
+              config:
+                where: "max_review_score IS NOT NULL"
+
+  - name: fct_order_items
+    description: "Table de faits des articles de commandes"
+    columns:
+      - name: order_item_pk
+        tests: [unique, not_null]
+
+      - name: order_id
+        tests: [not_null]
+
+  - name: dim_customers
+    description: "Table dimensionnelle des clients"
+    columns:
+      - name: customer_unique_id
+        tests: [unique, not_null]
+
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['loyal', 'repeat', 'one time']
+
+  - name: dim_products
+    description: "Table dimensionnelle des produits"
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+
+  - name: dim_sellers
+    description: "Table dimensionnelle des vendeurs"
+    columns:
+      - name: seller_id
+        tests: [unique, not_null]

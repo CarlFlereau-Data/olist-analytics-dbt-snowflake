@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: stg_olist_orders
+    description: "Commandes nettoyées, 1 ligne par commande"
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_olist_customers')
+                field: customer_id
+
+      - name: order_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['created', 'approved', 'invoiced', 'processing', 'shipped', 'delivered', 'canceled', 'unavailable']
+
+  - name: stg_olist_order_items
+    description: "Articles de commandes nettoyés, 1 ligne par article"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_olist_orders')
+                field: order_id
+
+      - name: product_id
+        tests: [not_null]
+
+  - name: stg_olist_customers
+    description: "Clients nettoyés, 1 ligne par client"
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+
+      - name: customer_unique_id
+        tests: [not_null]
+
+  - name: stg_olist_products
+    description: "Produits nettoyés, 1 ligne par produit"
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+
+  - name: stg_olist_order_reviews
+    description: "Avis de commandes nettoyés, 1 ligne par avis"
+    columns:
+      - name: review_score
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
+              config:
+                where: "TRY_TO_NUMBER(review_score) IS NOT NULL"
+  - name: stg_olist_change
+    description: "Taux de change journalier EUR/BRL nettoyé"
+    columns:
+      - name: exchange_date
+        tests: [unique, not_null]
+
+      - name: eur_brl_close
+        tests: [not_null]
+ 

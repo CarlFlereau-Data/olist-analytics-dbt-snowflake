@@ -1,0 +1,52 @@
+version: 2
+
+sources: 
+  - name: olist_raw
+    description: "Données brutes"
+    database: OLIST
+    schema: RAW
+    tables:
+      - name: olist_orders
+        description: "Olist orders table"
+        columns:
+        - name: order_id
+          tests: [unique, not_null]
+        - name: customer_id
+          tests: [not_null]
+      - name: olist_customers
+        description: "Olist customers table"
+        columns:
+          - name: customer_id
+            tests: [unique, not_null]
+      - name: olist_geolocation
+        description: "Olist geolocation table"
+        columns:
+          - name: geolocation_zip_code_prefix
+            tests: [not_null]
+      - name: olist_order_items
+        description: "Olist order items table"
+        columns:
+          - name: order_id
+            tests: [not_null]
+          - name: product_id
+            tests: [not_null]
+      - name: olist_order_payments
+        description: "Olist order payments table"
+      - name: olist_order_reviews
+        description: "Olist order reviews table"
+      - name: olist_products
+        description: "Olist products table"
+        columns:
+          - name: product_id
+            tests: [unique, not_null]
+      - name: olist_sellers
+        description: "Olist sellers table"
+        columns:
+          - name: seller_id
+            tests: [unique, not_null]
+      - name: olist_change
+        description: "Olist change table"
+        identifier: OLIST_CHANGE
+      
+      
+  
